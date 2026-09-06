@@ -494,9 +494,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9db233b0ab08c448f9f7908fa6516d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killed_demons: 0
-  total_demons: 0
-  demonsText: {fileID: 469838678}
+  demons: 0
+  totalDemons: 0
+  demonsText: {fileID: 0}
 --- !u!1 &1065523278
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +637,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 519420033}
           m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-          m_MethodName: ToAchievements
+          m_MethodName: toAchievements
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -681,7 +681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0025024414}
+  m_AnchoredPosition: {x: 0, y: -0.0024414062}
   m_SizeDelta: {x: 0, y: -0.0050049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1355868208
@@ -775,7 +775,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 720, y: 1280}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

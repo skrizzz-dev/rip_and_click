@@ -5,29 +5,72 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] int killed_demons;
-    public int total_demons;
+    public int demons;
+    public int totalDemons;
+    private int _clickPower = 1;
+    private bool _isAutoClickActive = false;
+
     public Text demonsText;
 
-    void Start()
+    private void Start()
     {
-        killed_demons = PlayerPrefs.GetInt("demons");
-        total_demons = PlayerPrefs.GetInt("total_demons");
-    }
-    public void ButtonClick()
-    {
-        killed_demons++;
-        total_demons++;
-        PlayerPrefs.SetInt("demons", killed_demons);
-        PlayerPrefs.SetInt("total_demons", total_demons);
+        LoadData();
+        UpdateUI();
+
+        if (_isAutoClickActive)
+        {
+            StartCoroutine(IdleFarmRoutine());
+        }
     }
 
-    public void ToAchievements()
+    private void LoadData()
+    {
+        demons = PlayerPrefs.GetInt("demons", 0);
+        totalDemons = PlayerPrefs.GetInt("total_demons", 0);
+        _clickPower = PlayerPrefs.GetInt("clickPower", 1);
+        _isAutoClickActive = PlayerPrefs.GetInt("isAutoClick", 0) == 1;
+    }
+
+    public void ButtonClick()
+    {
+        demons += _clickPower;
+        totalDemons += _clickPower;
+
+        SaveData();
+        UpdateUI();
+    }
+
+    private IEnumerator IdleFarmRoutine()
+    {
+        while (_isAutoClickActive)
+        {
+            yield return new WaitForSeconds(1f);
+            demons += _clickPower;
+            totalDemons += _clickPower;
+
+            SaveData();
+            UpdateUI();
+        }
+    }
+
+    private void SaveData()
+    {
+        PlayerPrefs.SetInt("demons", demons);
+        PlayerPrefs.SetInt("total_demons", totalDemons);
+        PlayerPrefs.Save();
+
+    }
+
+    private void UpdateUI()
+    {
+        if (demonsText != null)
+        {
+            demonsText.text = demons.ToString();
+        }
+    }
+
+    public void toAchievements()
     {
         SceneManager.LoadScene(1);
-    }
-    void Update()
-    {
-        demonsText.text = killed_demons.ToString();
     }
 }
