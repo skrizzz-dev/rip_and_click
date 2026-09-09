@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Collections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class AchMenu : MonoBehaviour
@@ -31,6 +32,30 @@ public class AchMenu : MonoBehaviour
         new Achievement { title = "Rampage", requiredScore = 5000, clickMultiplier = 5, unlockAutoCLick = false},
         new Achievement { title = "Rip and Tear", requiredScore = 10000, clickMultiplier = 5, unlockAutoCLick = true}
     };
+
+    public static void UpdateAchievements()
+    {
+        int totalDemons = PlayerPrefs.GetInt("total_demons", 0);
+        int currentClickPower = 1;
+        bool isAutoClickerUnlocked = false;
+
+        if (totalDemons >= 100) currentClickPower = 1;
+        if (totalDemons >= 500) currentClickPower = 2;
+        if (totalDemons >= 1000) currentClickPower = 3;
+        if (totalDemons >= 2000) currentClickPower = 4;
+        if (totalDemons >= 5000) currentClickPower = 5;
+        if (totalDemons >= 10000)
+        {
+            currentClickPower = 5;
+            isAutoClickerUnlocked = true;
+        }
+
+        PlayerPrefs.SetInt("clickPower", currentClickPower);
+        PlayerPrefs.SetInt("isAutoClick", isAutoClickerUnlocked ? 1 : 0);
+        PlayerPrefs.Save();
+
+
+    }
 
     public GameObject buttonPrefab;
     public Transform contentTransform;
@@ -76,7 +101,7 @@ public class AchMenu : MonoBehaviour
         }
         _spawnedButtons.Clear();
 
-        if (buttonPrefab == null) return; 
+        if (buttonPrefab == null) return;
 
         foreach (var ach in achievementsConfig)
         {
@@ -86,8 +111,8 @@ public class AchMenu : MonoBehaviour
 
             if (itemText != null)
             {
-                itemText.text = $"{ach.title}\n{ach.requiredScore} демонов - " +
-                    (isUnlocked ? "<color=green>Получено</color>" : "<color=red>Закрыто</color>");
+                itemText.text = $"{ach.title}\n{ach.requiredScore} РґРµРјРѕРЅРѕРІ - " +
+                    (isUnlocked ? "<color=green>РџРѕР»СѓС‡РµРЅРѕ</color>" : "<color=red>Р—Р°РєСЂС‹С‚Рѕ</color>");
             }
 
             Image[] images = item.GetComponentsInChildren<Image>();
@@ -100,7 +125,7 @@ public class AchMenu : MonoBehaviour
                 }
             }
             _spawnedButtons.Add(item);
-        }
+       }
     }
     public void toMenu()
     {

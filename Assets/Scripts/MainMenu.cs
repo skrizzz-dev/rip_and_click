@@ -38,6 +38,9 @@ public class MainMenu : MonoBehaviour
 
         SaveData();
         UpdateUI();
+
+        AchMenu.UpdateAchievements();
+        LoadData();
     }
 
     private IEnumerator IdleFarmRoutine()
@@ -50,6 +53,9 @@ public class MainMenu : MonoBehaviour
 
             SaveData();
             UpdateUI();
+
+            AchMenu.UpdateAchievements();
+            LoadData();
         }
     }
 
