@@ -1076,8 +1076,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalDemons: 0
-  unlockedIcon: {fileID: 0}
-  lockedIcon: {fileID: 0}
+  unlockedIcon: {fileID: 21300000, guid: 1807924904536134fbfbe050e3897207, type: 3}
+  lockedIcon: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
   achievementsConfig:
   - title: E1M1
     requiredScore: 100

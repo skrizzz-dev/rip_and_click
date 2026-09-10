@@ -12,10 +12,35 @@ public class MainMenu : MonoBehaviour
 
     public Text demonsText;
 
+    [Header("Звуки")]
+    public AudioSource audioSource;
+    public AudioClip achievementSound;
+    public AudioClip[] shootSounds;
+    public AudioClip[] demonSoundsDoom1;
+    public AudioClip[] demonSounds2016;
+    public AudioClip[] demonSoundsEternal;
+
+    public AudioSource musicSource;
+    public AudioClip[] doomMusic;
+
+
+    public Image backgroundImage;
+    public Sprite[] backgroundSprites;
+    public Image doomguyImage;
+    public Sprite[] doomguySprites;
+
+
+    private int _lastAchievemntIndex = -1;
+
     private void Start()
     {
         LoadData();
         UpdateUI();
+        UpdateDoomguySprite();
+        UpdateBackGround();
+        UpdateDoomMusic();
+
+        _lastAchievemntIndex = GetCurrentAchievementIndex();
 
         if (_isAutoClickActive)
         {
@@ -39,8 +64,12 @@ public class MainMenu : MonoBehaviour
         SaveData();
         UpdateUI();
 
+        PlayClickSound();
+
         AchMenu.UpdateAchievements();
         LoadData();
+
+        CheckAchievements();
     }
 
     private IEnumerator IdleFarmRoutine()
@@ -59,6 +88,139 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void CheckAchievements()
+    {
+        int currentAchievemntIndex = GetCurrentAchievementIndex();
+
+        if (currentAchievemntIndex > _lastAchievemntIndex)
+        {
+            _lastAchievemntIndex = currentAchievemntIndex;
+
+            PlayAchievementSound();
+            UpdateDoomguySprite();
+            UpdateBackGround();
+            UpdateDoomMusic();
+        }
+    }
+
+    private int GetCurrentAchievementIndex()
+    {
+        if (totalDemons >= 10000) return 6;
+        if (totalDemons >= 5000) return 5;
+        if (totalDemons >= 2000) return 4;
+        if (totalDemons >= 1000) return 3;
+        if (totalDemons >= 500) return 2;
+        if (totalDemons >= 100) return 1;
+        return 0;
+    }
+
+    private int GetDoomguySpriteIndex()
+    {
+        if (totalDemons >= 10000) return 3;
+        if (totalDemons >= 2000) return 2;
+        if (totalDemons >= 500) return 1;
+        return 0;
+    }
+
+    private void PlayAchievementSound()
+    {
+        if (audioSource != null && achievementSound != null)
+        {
+            audioSource.PlayOneShot(achievementSound);
+        }
+    }
+
+    private void PlayClickSound()
+    {
+        if (audioSource == null) return;
+
+        int doomguyIndex = GetDoomguySpriteIndex();
+
+        if (shootSounds != null && doomguyIndex < shootSounds.Length && shootSounds[doomguyIndex] != null)
+        {
+            audioSource.PlayOneShot(shootSounds[doomguyIndex], 0.5f);
+        }
+
+        AudioClip[] demonPool = null;
+
+        if (doomguyIndex == 0 || doomguyIndex == 1)
+        {
+            demonPool = demonSoundsDoom1;
+        }
+        else if (doomguyIndex == 2)
+        {
+            demonPool = demonSounds2016;
+        }
+        else if (doomguyIndex == 3)
+        {
+            demonPool = demonSoundsEternal;
+        }
+
+        if (demonPool != null && demonPool.Length > 0)
+        {
+            int randomIndex = Random.Range(0, demonPool.Length);
+            
+            if (demonPool[randomIndex] != null)
+            {
+                audioSource.PlayOneShot(demonPool[randomIndex], 0.5f);
+            }
+        }
+    }
+
+    private void UpdateDoomguySprite()
+    {
+        if (doomguyImage == null || doomguySprites == null || doomguySprites.Length == 0)
+        {
+            return;
+        }
+
+        int index = GetDoomguySpriteIndex();
+
+        if (index < doomguySprites.Length)
+        {
+            doomguyImage.sprite = doomguySprites[index];
+        }
+    }
+
+    private void UpdateBackGround()
+    {
+        if (backgroundImage == null || backgroundSprites == null || backgroundSprites.Length == 0) return;
+
+        int doomguyIndex = GetDoomguySpriteIndex();
+
+        if (doomguyIndex < backgroundSprites.Length)
+        {
+            backgroundImage.sprite = backgroundSprites[doomguyIndex];
+        }
+    }
+
+    private void UpdateDoomMusic()
+    {
+        if (musicSource == null || doomMusic == null || doomMusic.Length == 0)
+            return;
+
+        int doomguyIndex = GetDoomguySpriteIndex();
+
+        if (doomguyIndex >= doomMusic.Length) return;
+
+        AudioClip newMusic = doomMusic[doomguyIndex];
+
+        if (musicSource.clip == newMusic && musicSource.isPlaying)
+        {
+            return;
+        }
+
+        if (newMusic != null)
+        {
+            musicSource.clip = newMusic;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+        else
+        {
+            musicSource.Stop();
+        }
+    }
     private void SaveData()
     {
         PlayerPrefs.SetInt("demons", demons);

@@ -28,7 +28,7 @@ public class AchMenu : MonoBehaviour
         new Achievement { title = "E1M1", requiredScore = 100, clickMultiplier = 1, unlockAutoCLick = false},
         new Achievement { title = "Glory Kill", requiredScore = 500, clickMultiplier = 2, unlockAutoCLick = false},
         new Achievement { title = "GodKiller", requiredScore = 1000, clickMultiplier = 3, unlockAutoCLick = false},
-        new Achievement { title = "The Only Thing They Fear Is Your Click", requiredScore = 2000, clickMultiplier = 4, unlockAutoCLick = false},
+        new Achievement { title = "Only Thing They Fear Is Your Click", requiredScore = 2000, clickMultiplier = 4, unlockAutoCLick = false},
         new Achievement { title = "Rampage", requiredScore = 5000, clickMultiplier = 5, unlockAutoCLick = false},
         new Achievement { title = "Rip and Tear", requiredScore = 10000, clickMultiplier = 5, unlockAutoCLick = true}
     };
