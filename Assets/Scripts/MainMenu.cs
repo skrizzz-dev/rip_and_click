@@ -29,11 +29,22 @@ public class MainMenu : MonoBehaviour
     public Image doomguyImage;
     public Sprite[] doomguySprites;
 
+    [Header("Звуки демонов рандом")]
+    private int _clicksSinceLastDemon = 0;
+    private int _demonPlaysWindow = 0;
+    private const int WINDOW_SIZE = 5;
+    private const int MIN_DEMON_PLAYS = 1;
+    private const int MAX_DEMON_PLAYS = 4;
+
 
     private int _lastAchievemntIndex = -1;
 
     private void Start()
     {
+        PlayerPrefs.SetInt("total_demons", 9999);
+        PlayerPrefs.SetInt("demons", 9999);
+        PlayerPrefs.Save();
+
         LoadData();
         UpdateUI();
         UpdateDoomguySprite();
@@ -88,6 +99,18 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void CkeckAutoClickUnlock()
+    {
+        bool wasActive = _isAutoClickActive;
+        _isAutoClickActive = PlayerPrefs.GetInt("isAutoClick", 0) == 1;
+
+        if (!wasActive && _isAutoClickActive)
+        {
+            StartCoroutine(IdleFarmRoutine());
+            Debug.Log("Автоклик включен");
+        }
+    }
+
     private void CheckAchievements()
     {
         int currentAchievemntIndex = GetCurrentAchievementIndex();
@@ -100,6 +123,8 @@ public class MainMenu : MonoBehaviour
             UpdateDoomguySprite();
             UpdateBackGround();
             UpdateDoomMusic();
+
+            CkeckAutoClickUnlock();
         }
     }
 
@@ -141,29 +166,63 @@ public class MainMenu : MonoBehaviour
             audioSource.PlayOneShot(shootSounds[doomguyIndex], 0.5f);
         }
 
-        AudioClip[] demonPool = null;
+        _clicksSinceLastDemon++;
 
-        if (doomguyIndex == 0 || doomguyIndex == 1)
+        int clicksLeftInWindow = WINDOW_SIZE - _clicksSinceLastDemon;
+
+        int playLeft = MAX_DEMON_PLAYS - _demonPlaysWindow;
+
+        int playsNeeded = MIN_DEMON_PLAYS - _demonPlaysWindow;
+
+        bool shouldPlayDemon = false;
+
+        if (clicksLeftInWindow <= playsNeeded)
         {
-            demonPool = demonSoundsDoom1;
+            shouldPlayDemon = true;
         }
-        else if (doomguyIndex == 2)
+        else if (playLeft <= 0)
         {
-            demonPool = demonSounds2016;
+            shouldPlayDemon = false;
         }
-        else if (doomguyIndex == 3)
+        else
         {
-            demonPool = demonSoundsEternal;
+            shouldPlayDemon = Random.Range(0, 2) == 0;
         }
 
-        if (demonPool != null && demonPool.Length > 0)
+        if (shouldPlayDemon)
         {
-            int randomIndex = Random.Range(0, demonPool.Length);
-            
-            if (demonPool[randomIndex] != null)
+            _demonPlaysWindow++;
+
+            AudioClip[] demonPool = null;
+
+            if (doomguyIndex == 0 || doomguyIndex == 1)
             {
-                audioSource.PlayOneShot(demonPool[randomIndex], 0.5f);
+                demonPool = demonSoundsDoom1;
             }
+            else if (doomguyIndex == 2)
+            {
+                demonPool = demonSounds2016;
+            }
+            else if (doomguyIndex == 3)
+            {
+                demonPool = demonSoundsEternal;
+            }
+
+            if (demonPool != null && demonPool.Length > 0)
+            {
+                int randomIndex = Random.Range(0, demonPool.Length);
+
+                if (demonPool[randomIndex] != null)
+                {
+                    audioSource.PlayOneShot(demonPool[randomIndex], 0.5f);
+                }
+            }
+        }
+
+        if (_clicksSinceLastDemon >= WINDOW_SIZE)
+        {
+            _clicksSinceLastDemon = 0;
+            _demonPlaysWindow = 0;
         }
     }
 
