@@ -313,7 +313,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420033}
-        m_TargetAssemblyTypeName: AchMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: StoreMenu, Assembly-CSharp
         m_MethodName: toMenu
         m_Mode: 1
         m_Arguments:
@@ -372,7 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 295877533}
   - component: {fileID: 295877535}
-  - component: {fileID: 295877534}
+  - component: {fileID: 295877536}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -399,54 +399,6 @@ RectTransform:
   m_AnchoredPosition: {x: -361.72, y: -0.000005722046}
   m_SizeDelta: {x: 723.44, y: 997.55}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &295877534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295877532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf398db94293baf43b8537f6ddc2d483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalDemons: 0
-  unlockedIcon: {fileID: 0}
-  lockedIcon: {fileID: 0}
-  achievementsConfig:
-  - title: E1M1
-    requiredScore: 100
-    clickMultiplier: 1
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Glory Kill
-    requiredScore: 500
-    clickMultiplier: 2
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: GodKiller
-    requiredScore: 1000
-    clickMultiplier: 3
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: The Only Thing They Fear Is Your Click
-    requiredScore: 2000
-    clickMultiplier: 4
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rampage
-    requiredScore: 5000
-    clickMultiplier: 5
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rip and Tear
-    requiredScore: 10000
-    clickMultiplier: 5
-    unlockAutoCLick: 1
-    icon: {fileID: 0}
-  buttonPrefab: {fileID: 0}
-  contentTransform: {fileID: 519420032}
 --- !u!114 &295877535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +425,38 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &295877536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295877532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b622b84780478a04098118b77ee1ca89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalDemons: 0
+  charactersConfig:
+  - title: Marine
+    requiredScore: 0
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Doomguy
+    requiredScore: 500
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Slayer
+    requiredScore: 2000
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Doom Slayer
+    requiredScore: 10000
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  buttonPrefab: {fileID: 0}
+  contentTransform: {fileID: 0}
 --- !u!1 &381812554
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,43 +627,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf398db94293baf43b8537f6ddc2d483, type: 3}
+  m_Script: {fileID: 11500000, guid: b622b84780478a04098118b77ee1ca89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   totalDemons: 0
-  unlockedIcon: {fileID: 0}
-  lockedIcon: {fileID: 0}
-  achievementsConfig:
-  - title: E1M1
-    requiredScore: 100
-    clickMultiplier: 1
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Glory Kill
+  charactersConfig:
+  - title: Marine
+    requiredScore: 0
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Doomguy
     requiredScore: 500
-    clickMultiplier: 2
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: GodKiller
-    requiredScore: 1000
-    clickMultiplier: 3
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: The Only Thing They Fear Is Your Click
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Slayer
     requiredScore: 2000
-    clickMultiplier: 4
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rampage
-    requiredScore: 5000
-    clickMultiplier: 5
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rip and Tear
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
+  - title: Doom Slayer
     requiredScore: 10000
-    clickMultiplier: 5
-    unlockAutoCLick: 1
-    icon: {fileID: 0}
+    characterSprite: {fileID: 0}
+    lockedSprite: {fileID: 0}
   buttonPrefab: {fileID: 0}
   contentTransform: {fileID: 0}
 --- !u!1 &1089638496
@@ -918,7 +886,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.0025634766}
-  m_SizeDelta: {x: 0, y: -0.01}
+  m_SizeDelta: {x: 0, y: -0.0050049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1355868208
 MonoBehaviour:
@@ -940,7 +908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4d902bb271dc5c942957d87c21699618, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13d5844313001f6408d230361ac0b6db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -970,7 +938,6 @@ GameObject:
   - component: {fileID: 1391159228}
   - component: {fileID: 1391159227}
   - component: {fileID: 1391159226}
-  - component: {fileID: 1391159230}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1063,54 +1030,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1391159230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391159225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf398db94293baf43b8537f6ddc2d483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalDemons: 0
-  unlockedIcon: {fileID: 21300000, guid: 1807924904536134fbfbe050e3897207, type: 3}
-  lockedIcon: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
-  achievementsConfig:
-  - title: E1M1
-    requiredScore: 100
-    clickMultiplier: 1
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Glory Kill
-    requiredScore: 500
-    clickMultiplier: 2
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: GodKiller
-    requiredScore: 1000
-    clickMultiplier: 3
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: The Only Thing They Fear Is Your Click
-    requiredScore: 2000
-    clickMultiplier: 4
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rampage
-    requiredScore: 5000
-    clickMultiplier: 5
-    unlockAutoCLick: 0
-    icon: {fileID: 0}
-  - title: Rip and Tear
-    requiredScore: 10000
-    clickMultiplier: 5
-    unlockAutoCLick: 1
-    icon: {fileID: 0}
-  buttonPrefab: {fileID: 7323357481920934221, guid: 8b8845a5ca2767b4fbf132392f21e9fc, type: 3}
-  contentTransform: {fileID: 295877533}
 --- !u!1 &1512563805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1156,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639929808}
   m_CullTransparentMesh: 1
+--- !u!1 &1764062808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764062810}
+  - component: {fileID: 1764062809}
+  m_Layer: 0
+  m_Name: StoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1764062809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764062808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b622b84780478a04098118b77ee1ca89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalDemons: 0
+  charactersConfig:
+  - title: Marine
+    requiredScore: 0
+    characterSprite: {fileID: 21300000, guid: 6b1c52fe674339844a090f01c6b39901, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  - title: Doomguy
+    requiredScore: 500
+    characterSprite: {fileID: 21300000, guid: 484eb37fe92a53e4cbb0adf5f9de8498, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  - title: Slayer
+    requiredScore: 2000
+    characterSprite: {fileID: 21300000, guid: 0751b0156b9105d4690fdfec5938e0e1, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  - title: Doom Slayer
+    requiredScore: 10000
+    characterSprite: {fileID: 21300000, guid: e836f4985a7823c439e25632651b594a, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  - title: ???
+    requiredScore: 666
+    characterSprite: {fileID: 21300000, guid: 6dbb22f28fecada40ac244bde54a1b48, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  - title: ???
+    requiredScore: 100000
+    characterSprite: {fileID: 21300000, guid: b710448dd1e1c214da48e54b678ff997, type: 3}
+    lockedSprite: {fileID: 21300000, guid: f8975647899a8c34aa685fa39e5a1c6c, type: 3}
+  buttonPrefab: {fileID: 7323357481920934221, guid: 12d1fa13112088441aa038277c8939c5, type: 3}
+  contentTransform: {fileID: 295877533}
+--- !u!4 &1764062810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764062808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4996858, y: -0.026079137, z: -9.966074}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1244,3 +1235,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1391159229}
   - {fileID: 381812557}
+  - {fileID: 1764062810}

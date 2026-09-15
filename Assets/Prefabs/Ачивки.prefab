@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 738666217569415015}
   - component: {fileID: 425385936671524378}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: "\u0410\u0447\u0438\u0432\u043A\u0438"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

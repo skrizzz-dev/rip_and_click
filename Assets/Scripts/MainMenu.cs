@@ -12,6 +12,13 @@ public class MainMenu : MonoBehaviour
 
     public Text demonsText;
 
+    [Header("Потверждение сброса")]
+    public GameObject resetPanel;
+
+    [Header("Анимации")]
+    public GameObject[] clickEffectPrefabs;
+    public RectTransform buttonRect;
+
     [Header("Звуки")]
     public AudioSource audioSource;
     public AudioClip achievementSound;
@@ -28,6 +35,7 @@ public class MainMenu : MonoBehaviour
     public Sprite[] backgroundSprites;
     public Image doomguyImage;
     public Sprite[] doomguySprites;
+    private bool isMuted = false;
 
     [Header("Звуки демонов рандом")]
     private int _clicksSinceLastDemon = 0;
@@ -41,8 +49,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetInt("total_demons", 9999);
-        PlayerPrefs.SetInt("demons", 9999);
+        PlayerPrefs.SetInt("total_demons", 99999);   // временно: 700 демонов
+        PlayerPrefs.SetInt("demons", 99999);          // временно
         PlayerPrefs.Save();
 
         LoadData();
@@ -50,6 +58,7 @@ public class MainMenu : MonoBehaviour
         UpdateDoomguySprite();
         UpdateBackGround();
         UpdateDoomMusic();
+        ApplyMuteState();
 
         _lastAchievemntIndex = GetCurrentAchievementIndex();
 
@@ -65,6 +74,7 @@ public class MainMenu : MonoBehaviour
         totalDemons = PlayerPrefs.GetInt("total_demons", 0);
         _clickPower = PlayerPrefs.GetInt("clickPower", 1);
         _isAutoClickActive = PlayerPrefs.GetInt("isAutoClick", 0) == 1;
+        isMuted = PlayerPrefs.GetInt("Muted", 0) == 1;
     }
 
     public void ButtonClick()
@@ -76,11 +86,93 @@ public class MainMenu : MonoBehaviour
         UpdateUI();
 
         PlayClickSound();
+        PlayClickEffect();
 
         AchMenu.UpdateAchievements();
         LoadData();
 
         CheckAchievements();
+    }
+
+    void PlayClickEffect()
+    {
+        if (clickEffectPrefabs == null || clickEffectPrefabs.Length == 0) return;
+        if (buttonRect == null) return;
+
+        int index = Mathf.Clamp(_clickPower - 1, 0, clickEffectPrefabs.Length - 1);
+        GameObject prefab = clickEffectPrefabs[index];
+        if (prefab == null) return;
+
+        Canvas canvas = buttonRect.GetComponent<Canvas>();
+        Camera uiCamera = null;
+        if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            uiCamera = canvas.worldCamera;
+        }
+
+        Vector3 worldPos;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            buttonRect,
+            buttonRect.position,
+            uiCamera,
+            out worldPos
+            );
+
+        worldPos.z = 0;
+        Instantiate(prefab, worldPos, Quaternion.identity);
+    }
+
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        ApplyMuteState();
+
+        PlayerPrefs.SetInt("Muted", isMuted ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    void ApplyMuteState()
+    {
+        if (isMuted)
+        {
+            AudioListener.volume = 0f;
+        }
+        else
+        {
+            AudioListener.volume = 1f;
+        }
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.SetInt("demons", 0);
+        PlayerPrefs.SetInt("total_demons", 0);
+        PlayerPrefs.SetInt("clickPower", 1);
+        PlayerPrefs.SetInt("isAutoClick", 0);
+        PlayerPrefs.SetInt("selectedCharacter", 0);
+
+        PlayerPrefs.Save();
+        LoadData();
+        UpdateUI();
+        UpdateDoomguySprite();
+        UpdateBackGround();
+        UpdateDoomMusic();
+    }
+
+    public void showResetConfirm()
+    {
+        resetPanel.SetActive(true);
+    }
+
+    public void HideResetConfirm()
+    {
+        resetPanel.SetActive(false);
+    }
+
+    public void ConfirmReset()
+    {
+        ResetProgress();
+        HideResetConfirm();
     }
 
     private IEnumerator IdleFarmRoutine()
@@ -233,7 +325,18 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
-        int index = GetDoomguySpriteIndex();
+        int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter", -1);
+
+        int index;
+
+        if (selectedCharacter >= 0 && selectedCharacter < doomguySprites.Length)
+        {
+            index = selectedCharacter;
+        }
+        else
+        {
+            index = GetDoomguySpriteIndex();
+        }
 
         if (index < doomguySprites.Length)
         {
@@ -299,5 +402,10 @@ public class MainMenu : MonoBehaviour
     public void toAchievements()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void toStore()
+    {
+        SceneManager.LoadScene(2);
     }
 }
