@@ -49,10 +49,6 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetInt("total_demons", 99999);   // временно: 700 демонов
-        PlayerPrefs.SetInt("demons", 99999);          // временно
-        PlayerPrefs.Save();
-
         LoadData();
         UpdateUI();
         UpdateDoomguySprite();
